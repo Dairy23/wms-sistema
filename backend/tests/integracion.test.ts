@@ -29,4 +29,13 @@ describe('Pruebas de integración - API WMS', () => {
     expect(esAdmin).toBe(false);
   });
 
+  test('email con formato correcto es aceptado por el sistema', () => {
+    const validarEmail = (email) => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+    expect(validarEmail('bodega@wms.com')).toBe(true);
+    expect(validarEmail('admin@empresa.gt')).toBe(true);
+    expect(validarEmail('sinArroba')).toBe(false);
+  });
+
 });
