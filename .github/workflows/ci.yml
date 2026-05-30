@@ -1,0 +1,36 @@
+name: CI/CD - WMS Sistema
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+
+    - name: Instalar dependencias
+      run: |
+        cd backend
+        npm install
+
+    - name: Ejecutar pruebas
+      run: |
+        cd backend
+        npm test
+
+    - name: Reporte de cobertura
+      run: |
+        cd backend
+        npm run coverage || true
